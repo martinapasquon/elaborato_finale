@@ -1,7 +1,7 @@
 
 
-#ifndef __fluid__
-#define __fluid__
+#ifndef __simulaz__
+#define __simulaz__
 
 //parametri esperimento
 int N_0=100; //numero di cellule dei bottlenecks

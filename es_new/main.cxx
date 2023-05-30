@@ -72,34 +72,20 @@ for (int n_Ngen0=0; n_Ngen0<25; n_Ngen0++){
 //} // togliere il commento se si toglie anche in  (**)
 }
 if(restart==1){ //simulazione delle mutazioni
- /* // togliere il commento se si toglie anche in  (**)  
-for (int n_Ngen01=0; n_Ngen01<25; n_Ngen01++){
-     P_alive=P_alive + 0.005;
-     n_gen=n_gen_arr[n_Ngen01];
-     n_gen_0=n_gen0_arr_0[n_Ngen01];
-   
-      v_dead=(1-pow(1-P_alive, 2));
-      P_2=P_alive*P_alive;
-      P_0=(pow(1-P_alive, 2));
-      P_1=2.*P_alive*(1-P_alive);
-      P[0]=P_0; P[1]=P_1; P[2]=P_2;
 
- }
-*/
-  
-
-   ifstream in_rami ("LC_CRC0282_ngen0_120.txt"); //si usa un file che contiene le coalescenze per simulare le mitazioni
+   ifstream in_rami ("LC_CRC0282_ngen0_120.txt"); //si usa un file che contiene le coalescenze per simulare le mutazioni
    int rev=0;
    double mu_iniz=mu*0.1;
    double delta_mu=mu*0.02;
-   for (int l=0; l<(n_tr_tot); l++){ //leggo le coalescenze 
+   for (int l=0; l<(n_tr_tot); l++){ //leggo le coalescenze (se è tolto il commento in (**), allora fare il ciclo per l>n_tr_tot*25 in in generale 
+      //per l>n_tr_tot*a dove a è il massimo di n_Ngen0
        in_rami >> tau[0] >> tau[1] >> tau[2] >> tau[3];
        for (int n_mu=0; n_mu<50; n_mu++){  //se voglio far variare mu, se no commento e uso il mu nell'header
             mu=mu_iniz+delta_mu*n_mu;
 
 
-
-           rami[0]=tau[0];
+           //associa i rami alle coalescenze
+           rami[0]=tau[0]; 
            rami[1]=tau[0];
            rami[2]=tau[2];
            rami[3]=tau[1];
@@ -148,7 +134,7 @@ void genera_popolazione(char const* filename){
           T = gsl_rng_default; // Generator setup
           r = gsl_rng_alloc (T);
           gsl_rng_set(r, mySeed);
-
+          //per ogni generazione estrae i numeri n_0, n_1 e n_2 dalla multinomiale, ovvero trova il numero di figlie di ogni cellula 
           gsl_ran_multinomial ( r,3 ,v[i-1] , P, n_figlie);
           
             v_1[i-1]=n_figlie[1];
@@ -164,7 +150,7 @@ void genera_popolazione(char const* filename){
    
    
    for (int x=0; x<n_alb; x++){
-      v[(n_gen*x)+n_gen_0]=N_0; 
+      v[(n_gen*x)+n_gen_0]=N_0; //il numero di cellule al bottleneck e N_0
       do{
          for(int i=1; i<n_gen; i++){
              const gsl_rng_type * T;
@@ -188,12 +174,13 @@ void genera_popolazione(char const* filename){
              T = gsl_rng_default; // Generator setup
              r = gsl_rng_alloc (T);
              gsl_rng_set(r, mySeed);
-            gsl_ran_multinomial ( r,3 ,v[((n_gen*n_alb)+n_gen_0)] , P, n_figlie);
-            v_0[((n_gen*n_alb)+n_gen_0)]=n_figlie[0];
-              gsl_rng_free (  r );      
+             //per ogni generazione estrae i numeri n_0, n_1 e n_2 dalla multinomiale, ovvero trova il numero di figlie di ogni cellula 
+             gsl_ran_multinomial ( r,3 ,v[((n_gen*n_alb)+n_gen_0)] , P, n_figlie);
+             v_0[((n_gen*n_alb)+n_gen_0)]=n_figlie[0];
+             gsl_rng_free (  r );      
          }
         
-      }while(v[n_gen -1 +n_gen*x+n_gen_0]< N_0);
+      }while(v[n_gen -1 +n_gen*x+n_gen_0]< N_0); //se si hanno meno di N_0 cellule al bottleneck, si rifà la simulazione perchè se no non rappresenta l'esperimento
    }
    out_gen_0.close();
 }
@@ -234,9 +221,9 @@ void genera_popolazione_efficace(char const* filename, char const* filename1, ch
             }while(conta_norip>0);
          
             costa=a_i;
-            if(a_i>(v[i-1])){
-               costa=costa-(v[i]-(v[i-1]));
-                 }
+            if(a_i>(v_1[i-1]+v_2[i-1])){
+               costa=costa-(v_2[i]);
+             }
          
             for (int k=0; k<bott_coppie.size(); k++){
                if(costa==bott_coppie[k])

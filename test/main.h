@@ -1,16 +1,16 @@
 
 
-#ifndef __fluid__
-#define __fluid__
+#ifndef __simulazione__
+#define __simulazione__
 
 
 
 
-const int N_0=1;
+const int N_0=1;  //numero di cellule alla generazione 0
 int conta_out=0;
-const int n_gen=15;
-const int n_cellule=3;
-const int n_tr_tot=100000;
+const int n_gen=15; // numero di generazioni
+const int n_cellule=3; //numero di cellule di cui si trovano le coalescenze
+const int n_tr_tot=100000; //numero di simulazioni
 int n=0;
 long j=0, k=0;
 int mn, mx;
@@ -38,7 +38,7 @@ long v_0[n_gen-1];
 long v_1[n_gen-1];
 long v_2[n_gen-1];
 double prob=0; 
-double P_alive=1;
+double P_alive=1; 
 double P_2=P_alive*P_alive;
 double P_0=(pow(1-P_alive, 2));
 double P_1=2.*P_alive*(1-P_alive);

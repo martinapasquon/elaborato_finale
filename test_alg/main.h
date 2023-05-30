@@ -1,15 +1,14 @@
 
 
-#ifndef __fluid__
-#define __fluid__
+#ifndef __simulazione__
+#define __simulazione__
 
 
 //parametri
 const int N_0=100;
 const int n_gen=10;
 const int n_cellule=50;
-//double b=1;
-//double d=0.;
+
 
 int conta_out=0;
 //simulazione
@@ -50,9 +49,6 @@ unsigned long c=0;
 unsigned long  v[n_gen];
 unsigned long  v_possibili[n_gen];
 unsigned long gen[n_cellule];
-double p=0;
-unsigned long N_max=0;
-unsigned long N_av=0;
 unsigned long  a_i=0;
 double v_dead=(1-pow(1-P_alive, 2));
 vector <unsigned long > bott;
@@ -61,9 +57,6 @@ vector <unsigned long > bott_coppie;
 int conta_rev=0;
 int conta1_rev=0;
 
-
-
-//double figlie_av=2*b/(b+d);
 double casuale=0;
 unsigned long  a=0;
 unsigned long  conta_uguali=0;
@@ -76,4 +69,3 @@ default_random_engine generator(seed);
 
 
 #endif
-

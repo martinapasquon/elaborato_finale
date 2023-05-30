@@ -1,26 +1,20 @@
 
 
-#ifndef __fluid__
-#define __fluid__
+#ifndef __simulazione_
+#define __simulazione__
 
 
 
 
-const int N_0=1;
+const int N_0=1; //numero di cellule alla generazione 0
 int conta_out=0;
-const int n_gen=15;
-const int n_cellule=3;
+const int n_gen=15; //numero di generazioni
+const int n_cellule=3; //numero di cellule di cui si trovano le coalescenze
 
-const int n_tr_tot=10000;
+const int n_tr_tot=10000; //numero di simulazioni
 int j=0, k=0;
 int mn, mx;
-int  alber=0;
-const unsigned long n_fin= N_0*pow(2,n_gen-1);
-unsigned long tree[n_fin];
-unsigned long  tree_new[n_fin];
-unsigned long  branch_a[n_gen];
-unsigned long  branch_b[n_gen];
-unsigned long  branch_c[n_gen];
+
 int br_long=0;
 int br_short=0;
 
@@ -35,13 +29,9 @@ double P_2=P_alive*P_alive;
 double P_0=(pow(1-P_alive, 2));
 double P_1=2.*P_alive*(1-P_alive);
 unsigned long a_i=0;
-double p=0;
-unsigned long N_max=0;
-int N_av=0;
 double v_dead=(1-pow(1-P_alive, 2));
 
-unsigned long costa=0, costa_a=0, costa_b=0;
-double casuale=0;
+unsigned long costa=0;
 unsigned long cell[n_cellule];
 unsigned long gen[n_cellule];
 unsigned long a=0;

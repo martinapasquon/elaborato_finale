@@ -92,28 +92,29 @@ for (int n_Ngen01=0; n_Ngen01<25; n_Ngen01++){
    int rev=0;
    double mu_iniz=mu*0.1;
    double delta_mu=mu*0.02;
-  for (int l=0; l<(n_tr_tot); l++){ //leggo le coalescenze 
-   in_rami >> tau[0] >> tau[1] >> tau[2] >> tau[3];
-   for (int n_mu=0; n_mu<50; n_mu++){  //se voglio far variare mu, se no commento e uso il mu nell'header
-    mu=mu_iniz+delta_mu*n_mu;
+   for (int l=0; l<(n_tr_tot); l++){ //leggo le coalescenze 
+       in_rami >> tau[0] >> tau[1] >> tau[2] >> tau[3];
+       for (int n_mu=0; n_mu<50; n_mu++){  //se voglio far variare mu, se no commento e uso il mu nell'header
+            mu=mu_iniz+delta_mu*n_mu;
 
 
 
-   rami[0]=tau[0];
-   rami[1]=tau[0];
-   rami[2]=tau[2];
-   rami[3]=tau[1];
-   rami[4]=tau[3];
+           rami[0]=tau[0];
+           rami[1]=tau[0];
+           rami[2]=tau[2];
+           rami[3]=tau[1];
+           rami[4]=tau[3];
   
  
   
-   for (int n_ramo=0; n_ramo< n_cellule+ (n_cellule-1); n_ramo++)
-        metti_mutazioni(n_ramo); //associa le mutazioni ai rami 
-   stampa_mutazioni("mut_LC_CRC0282_ngen0_120.txt" ); //stampa su file le mutazioni
-  } in_rami.close(); 
+           for (int n_ramo=0; n_ramo< n_cellule+ (n_cellule-1); n_ramo++)
+              metti_mutazioni(n_ramo); //associa le mutazioni ai rami 
+           stampa_mutazioni("mut_LC_CRC0282_ngen0_120.txt" ); //stampa su file le mutazioni
+        }
+    in_rami.close(); 
+  }
+
 }
-
-
 
 
 return 0;
@@ -380,36 +381,30 @@ void gen_i(int a, int b, int c, char const*filename, int conta) {
          }while(gen[a]==gen[c]);
 
         if(j>(n_gen*(n_alb-1))){
-         if(gen[a]>(v_1[j-1]+v_2[j-1])){
-       
-         gen[a]=gen[a]-v_2[j-1];
-         }
+           if(gen[a]>(v_1[j-1]+v_2[j-1])){
+             gen[a]=gen[a]-v_2[j-1];
+           }
                
-          if(gen[c]>(v_1[j-1]+v_2[j-1])){
-           
-         gen[c]=gen[c]-v_2[j-1];  
-          }  
+           if(gen[c]>(v_1[j-1]+v_2[j-1])){
+               gen[c]=gen[c]-v_2[j-1];  
+            }  
         }
         else{
-          if(gen[a]>v_possibili[j-1]){
-       
-         gen[a]=gen[a]-(v_possibili[j]-v_possibili[j-1]);
-         }
+            if(gen[a]>v_possibili[j-1]){
+                gen[a]=gen[a]-(v_possibili[j]-v_possibili[j-1]);
+            }
                
-          if(gen[c]>v_possibili[j-1]){
-           
-         gen[c]=gen[c]-(v_possibili[j]-v_possibili[j-1]);  
-          }  
+            if(gen[c]>v_possibili[j-1]){
+                gen[c]=gen[c]-(v_possibili[j]-v_possibili[j-1]);  
+            }  
 
         }
-         conta1=j;
+        conta1=j;
         
+      }
     }
-}
-  if (gen[a]==gen[c]){
-      out_coal  <<  n_gen*n_alb +n_gen_0 -conta  << setw(10) << n_gen*n_alb +n_gen_0 -conta1 << setw(10) << conta-conta1 <<  setw(10) << conta1 << endl;
-
- 
- } 
-out_coal.close();
+    if (gen[a]==gen[c]){
+       out_coal  <<  n_gen*n_alb +n_gen_0 -conta  << setw(10) << n_gen*n_alb +n_gen_0 -conta1 << setw(10) << conta-conta1 <<  setw(10) << conta1 << endl;
+    } 
+    out_coal.close();
 }
